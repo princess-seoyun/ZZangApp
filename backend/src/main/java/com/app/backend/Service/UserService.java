@@ -3,7 +3,6 @@ package com.app.backend.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.backend.DTO.UserDto;
 import com.app.backend.Entity.UserEntity;
 import com.app.backend.Mapper.UserMapper;
 
@@ -13,12 +12,12 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public UserEntity registerUser(UserDto user) {
+    public int registerUser(UserEntity user) {
 
         // 같은 아이디가 있는지 중복 체크하기
 
-        UserEntity userEntity = userMapper.insert(user);
-        return userEntity;
+        int save = userMapper.insert(user);
+        return save;
     }
 
 }

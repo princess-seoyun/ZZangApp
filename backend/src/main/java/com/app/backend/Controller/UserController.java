@@ -1,5 +1,7 @@
 package com.app.backend.Controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,30 +9,30 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.backend.DTO.UserDto;
 import com.app.backend.Entity.UserEntity;
 import com.app.backend.Service.UserService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class); // Logger 인스턴스 생성
+
     @Autowired
     private UserService userService;
 
-    @PostMapping("signup")
-    public String registerUser(@RequestBody UserDto user) {
-        UserEntity userEntity = userService.registerUser(user);
+    UserDto userDto;
 
-        System.out.println(userEntity.getName());
-        System.out.println("실행중");
-        
-        if(userEntity.getName() != "" ) {
-            return "success" + userEntity.getName() + "--";
+    @PostMapping("/signup")
+    public String registerUser(@RequestBody UserEntity user) {
+        int save = userService.registerUser(user);
+
+        if(save == '1') {
+            logger.info("save");
+            return "success";
         }
 
         return "fail";
     }
-    
-
 }

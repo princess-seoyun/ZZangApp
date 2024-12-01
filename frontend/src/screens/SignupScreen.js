@@ -16,16 +16,23 @@ const SignUpScreen = ({ navigation }) => {
       return false;
     } else {
       try {
-        const response  = await axios.post('http://127.0.0.1:8080/users/signup', {
-          id,
-          password,
-          name,
-          email,
+
+        const userData = {
+          id : id,
+          password : password,
+          name : name,
+          email : email
+        };
+
+        const response = await axios.post('http://127.0.0.1:8080/users/signup', userData, {
+          headers: {
+            'Content-Type': 'application/json', // 요청을 json 으로 보낸다는 뜻
+          },
         });
 
         if (response.status === 200) {
           console.log("success");
-          navigation.navigate('Login');
+          // navigation.navigate('Login');
         }
       } catch (error) {
         console.error(error);

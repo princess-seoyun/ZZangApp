@@ -8,7 +8,7 @@ import com.app.backend.Entity.UserEntity;
 @Mapper
 public interface UserMapper {
 
-    @Insert("insert into cust_info (id, password, name, email) values (#{id}, #{password}, #{name}, #{email})")
+    @Insert("insert into cust_info (id, password, name, email, role) values (#{id}, #{password}, #{name}, #{email} , #{role})")
     public int insert(UserEntity userEntity);
 
 }

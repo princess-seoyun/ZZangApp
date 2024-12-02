@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/signup")
+public class SignupController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class); // Logger 인스턴스 생성
+    private static final Logger logger = LoggerFactory.getLogger(SignupController.class); // Logger 인스턴스 생성
 
     @Autowired
     private UserService userService;
 
     UserDto userDto;
 
-    @PostMapping("/signup")
+    @PostMapping("/insert")
     public String registerUser(@RequestBody UserEntity user) {
         int save = userService.registerUser(user);
 

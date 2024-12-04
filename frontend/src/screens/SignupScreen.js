@@ -22,15 +22,15 @@ const SignUpScreen = ({ navigation }) => {
           email: email
         };
 
-        const response = await axios.post('http://127.0.0.1:8080/signup/insert', userData, {
+        const response = await axios.post('http://127.0.0.1:8080/user/insert', userData, {
           headers: {
             'Content-Type': 'application/json', // json 으로 보낸다는 뜻
           },
         });
 
-        if (response.status === 200) {
+        if (response.status === 200 && response.data === "success") {
           console.log("회원가입 성공");
-          // navigation.navigate('Login');
+           navigation.navigate('Login');
         }
       } catch (error) {
         console.error('회원가입 요청 실패:', error);

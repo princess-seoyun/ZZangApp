@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from './src/screens/LoginScreen';
 import SignUp from './src/screens/SignupScreen';
+import Main from './src/screens/MainScreen';
 
 import { enableScreens } from 'react-native-screens'; 
 
@@ -19,6 +20,7 @@ const App = () => {
         <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false}} /> */}
          <Stack.Screen name="Login" component={Login}  />
          <Stack.Screen name="SignUp" component={SignUp} />
+         <Stack.Screen name="Main" component={Main} />
       </Stack.Navigator>
     </NavigationContainer>
   );

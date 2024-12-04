@@ -15,4 +15,9 @@ public class EncryptionService {
     public String encryptPassword(String plainPassword) {
         return passwordEncoder.encode(plainPassword);
     }
+
+    // 비밀번호 일치 여부 확인
+    public boolean passwordMatches(String plainPassword, String encryptedPassword) {
+        return passwordEncoder.matches(plainPassword, encryptedPassword);
+    }
 }

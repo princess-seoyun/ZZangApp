@@ -10,6 +10,8 @@ const SignUpScreen = ({ navigation }) => {
   const pwInputRef = useRef(null);
 
   const handleSubmit = async () => {
+
+  console.log(password);
     if (!id) {
       Alert.alert('입력 오류', '아이디를 입력하세요',
         [
@@ -45,10 +47,11 @@ const SignUpScreen = ({ navigation }) => {
           },
         });
 
-        if (response.status === 200) {
-          console.log("로그인 성공 성공");
-          console.log(response.data);
+        if (response.status === 200 && response.data === "success") {
           navigation.navigate('Main');
+        }
+        else {
+        Alert.alert("로그인","실패");
         }
       } catch (error) {
         setId("");

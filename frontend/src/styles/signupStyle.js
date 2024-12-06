@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 13,
     marginBottom: 5,
-    fontFamily : 'GmarketSansTTFLight',
+    fontFamily : 'GmarketSansTTFMedium',
   },
   row: {
     flexDirection: 'row',  // 버튼을 가로로 배치

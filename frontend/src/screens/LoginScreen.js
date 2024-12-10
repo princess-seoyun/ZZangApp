@@ -1,9 +1,71 @@
-import React, { useState, useRef } from 'react';
-import { View, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, TextInput, TouchableOpacity, Text, Alert , SafeAreaView, Button } from 'react-native';
 import axios from 'axios';
 import styles from '../styles/loginStyle'
 
-const SignUpScreen = ({ navigation }) => {
+import { NaverLogin, getProfile } from '@react-native-seoul/naver-login'; // 네이버 로그인
+
+const iosKeys = {
+  kConsumerKey: "Xyho5Y98bYLW2GizVv49",
+  kConsumerSecret: "nwrNOrxIwy",
+  kServiceAppName: "frontend",
+  kServiceAppUrlScheme: "org.reactjs.native.example.frontend.Login" // only for iOS
+};
+
+const androidKeys = {
+//  kConsumerKey: "",
+//  kConsumerSecret: "",
+//  kServiceAppName: ""
+};
+
+/** This key is setup in iOS. So don't touch it */
+const serviceUrlSchemeIOS = 'navertest';
+
+const initials = Platform.OS === "ios" ? iosKeys : androidKeys;
+
+const LoginScreen = ({ navigation }) => {
+
+const [naverToken, setNaverToken] = React.useState(null);
+
+//    useEffect(() => {
+//        NaverLogin.initialize({
+//          kServiceAppName,
+//          kConsumerKey,
+//          kConsumerSecret,
+//          serviceUrlSchemeIOS,
+//          disableNaverAppAuthIOS: true,
+//        });
+//      }, []);
+
+NaverLogin.initialize({
+  appName,
+  consumerKey,
+  consumerSecret,
+  serviceUrlSchemeIOS,
+  disableNaverAppAuthIOS: true,
+});
+
+  const naverLogin = (props) => {
+    return new Promise((resolve, reject) => {
+      NaverLogin.login(props, (err, token) => {
+        if (err) {
+          console.log("로그인 에러:", err);
+          reject(err);
+          return;
+        }
+        console.log(`로그인 성공, 토큰: ${JSON.stringify(token)}`);
+        setNaverToken(token.access_token);  // access_token을 저장하도록 수정
+        resolve(token);
+      });
+    });
+  };
+
+
+    const naverLogout = () => {
+      NaverLogin.logout();
+      setNaverToken("");
+    };
+
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const idInputRef = useRef(null); // TextInput 참조 생성
@@ -54,8 +116,8 @@ const SignUpScreen = ({ navigation }) => {
         Alert.alert("로그인","실패");
         }
       } catch (error) {
-        setId("");
-        setPassword("");
+//        setId("");
+//        setPassword("");
         console.error('로그인 요청 실패:', error);
       }
     }
@@ -97,7 +159,19 @@ const SignUpScreen = ({ navigation }) => {
             <Text style={styles.btnText2}>회원가입</Text>
           </TouchableOpacity>
         </View>
-        
+
+        <SafeAreaView>
+              <Button
+                title="네이버 아이디로 로그인하기"
+                onPress={() => naverLogin(initials)}
+              />
+              {!!naverToken && <Button title="로그아웃하기" onPress={naverLogout} />}
+
+              {!!naverToken && (
+                <Button title="회원정보 가져오기" onPress={getUserProfile} />
+              )}
+            </SafeAreaView>
+
         <View
           style={styles.appContainer}>
           <Text
@@ -112,4 +186,4 @@ const SignUpScreen = ({ navigation }) => {
 
 
 
-export default SignUpScreen;
+export default LoginScreen;

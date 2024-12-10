@@ -1,12 +1,13 @@
-import 'react-native-gesture-handler'; 
+import React from "react";
+
+import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import Login from './src/screens/LoginScreen';
 import SignUp from './src/screens/SignupScreen';
 import Main from './src/screens/MainScreen';
 
-import { enableScreens } from 'react-native-screens'; 
+import { enableScreens } from 'react-native-screens';
 
 enableScreens(); // 성능 향상 및 화면 전환 최적화
 

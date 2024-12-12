@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   subcontainer: {
     width : '70%',
-    height : '40%'
+    height : '50%'
   },
   input: { 
     height: 50, 
@@ -70,13 +70,22 @@ const styles = StyleSheet.create({
     color : 'white'
   },
   appContainer : {
-    height : '80%',
+    height : '35%',
     justifyContent: 'flex-end', 
     alignItems: 'center',
   },
   appName : {
     color : 'gray',
     fontFamily : 'GmarketSansTTFMedium',
+  },
+  line : {
+    flex : 1,
+    borderWidth : 0.5,
+    width : "100%",
+    borderBottomColor: '#EAEAEA',
+    justifyContent: 'center',
+    alignItems: 'center',
+
   }
 });
 

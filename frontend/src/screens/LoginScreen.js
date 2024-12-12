@@ -1,124 +1,113 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TextInput, TouchableOpacity, Text, Alert , SafeAreaView, Button } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Alert, SafeAreaView, Image, Platform } from 'react-native';
 import axios from 'axios';
-import styles from '../styles/loginStyle'
-
-import { NaverLogin, getProfile } from '@react-native-seoul/naver-login'; // 네이버 로그인
+import styles from '../styles/loginStyle';
+import NaverLogin from '@react-native-seoul/naver-login';
 
 const iosKeys = {
   kConsumerKey: "Xyho5Y98bYLW2GizVv49",
-  kConsumerSecret: "nwrNOrxIwy",
+  kConsumerSecret: "A7koS2rbb4",
   kServiceAppName: "frontend",
-  kServiceAppUrlScheme: "org.reactjs.native.example.frontend.Login" // only for iOS
+  kServiceAppUrlScheme: "org.reactjs.native.example.frontend.Login", // only for iOS
 };
 
 const androidKeys = {
-//  kConsumerKey: "",
-//  kConsumerSecret: "",
-//  kServiceAppName: ""
+  // Add your Android keys here if necessary
 };
-
-/** This key is setup in iOS. So don't touch it */
-const serviceUrlSchemeIOS = 'navertest';
 
 const initials = Platform.OS === "ios" ? iosKeys : androidKeys;
 
 const LoginScreen = ({ navigation }) => {
-
-const [naverToken, setNaverToken] = React.useState(null);
-
-//    useEffect(() => {
-//        NaverLogin.initialize({
-//          kServiceAppName,
-//          kConsumerKey,
-//          kConsumerSecret,
-//          serviceUrlSchemeIOS,
-//          disableNaverAppAuthIOS: true,
-//        });
-//      }, []);
-
-NaverLogin.initialize({
-  appName,
-  consumerKey,
-  consumerSecret,
-  serviceUrlSchemeIOS,
-  disableNaverAppAuthIOS: true,
-});
-
-  const naverLogin = (props) => {
-    return new Promise((resolve, reject) => {
-      NaverLogin.login(props, (err, token) => {
-        if (err) {
-          console.log("로그인 에러:", err);
-          reject(err);
-          return;
-        }
-        console.log(`로그인 성공, 토큰: ${JSON.stringify(token)}`);
-        setNaverToken(token.access_token);  // access_token을 저장하도록 수정
-        resolve(token);
-      });
-    });
-  };
-
-
-    const naverLogout = () => {
-      NaverLogin.logout();
-      setNaverToken("");
-    };
-
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  const idInputRef = useRef(null); // TextInput 참조 생성
+  const idInputRef = useRef(null);
   const pwInputRef = useRef(null);
+  const [naverToken, setNaverToken] = useState(null);
+
+  useEffect(() => {
+    try {
+      // Initialize Naver Login SDK
+      NaverLogin.initialize({
+        appName: iosKeys.kServiceAppName,
+        consumerKey: iosKeys.kConsumerKey,
+        consumerSecret: iosKeys.kConsumerSecret,
+        serviceUrlSchemeIOS: iosKeys.kServiceAppUrlScheme,
+        disableNaverAppAuthIOS: true,
+      });
+      console.log("네이버 로그인 초기화 성공");
+    } catch (error) {
+      console.error("네이버 로그인 초기화 실패 :", error);
+    }
+  }, []);
+
+  const naverLogin = async (props) => {
+    try {
+      const token = await new Promise((resolve, reject) => {
+        NaverLogin.login(props, (err, token) => {
+          if (err) {
+            console.error("Naver login 에러: ", err);
+            reject(err);
+            return;
+          }
+          resolve(token);
+        });
+      });
+
+      if (token && token.access_token) {
+        console.log("Naver login 성공, token: ", token);
+        setNaverToken(token.access_token);
+        navigation.navigate('Main');
+      }
+    } catch (error) {
+      console.error("Error during Naver login:", error);
+      Alert.alert("Login failed", "An error occurred during the login process.");
+    }
+  };
+
+  const naverLogout = () => {
+    NaverLogin.logout();  // Naver logout
+    setNaverToken(null);   // Reset Naver token
+    Alert.alert('로그아웃', '로그아웃이 완료되었습니다.');
+    deleteToken();
+  };
+
+  const deleteToken = async () => {
+      try {
+        await NaverLogin.deleteToken();
+//        setSuccessResponse(undefined);
+//        setFailureResponse(undefined);
+//        setGetProfileRes(undefined);
+      } catch (e) {
+        console.error(e);
+      }
+    };
 
   const handleSubmit = async () => {
-
-  console.log(password);
     if (!id) {
-      Alert.alert('입력 오류', '아이디를 입력하세요',
-        [
-          {
-            text:'확인',
-            onPress: () => idInputRef.current?.focus(), // 커셔 이동
-          },
-          { cancelable: false }
-        ]);
-      focus(id);
+      Alert.alert('입력 오류', '아이디를 입력하세요', [
+        { text: '확인', onPress: () => idInputRef.current?.focus() },
+      ]);
       return false;
-    } else if(!password) {
-      Alert.alert('입력 오류', '비밀번호를 입력하세요',
-        [
-          {
-            text:'확인',
-            onPress: () => pwInputRef.current?.focus(), // 커셔 이동
-          },
-          { cancelable: false }
-        ]);
-      focus(id);
+    } else if (!password) {
+      Alert.alert('입력 오류', '비밀번호를 입력하세요', [
+        { text: '확인', onPress: () => pwInputRef.current?.focus() },
+      ]);
       return false;
     } else {
       try {
-        const loginData = {
-          id: id,
-          password: password,
-        };
-
+        const loginData = { id, password };
         const response = await axios.post('http://127.0.0.1:8080/user/login', loginData, {
-          headers: {
-            'Content-Type': 'application/json', // json 으로 보낸다는 뜻
-          },
+          headers: { 'Content-Type': 'application/json' },
         });
 
         if (response.status === 200 && response.data === "success") {
           navigation.navigate('Main');
-        }
-        else {
-        Alert.alert("로그인","실패");
+        } else {
+          Alert.alert("로그인 실패", "아이디나 비밀번호를 확인해주세요.");
         }
       } catch (error) {
-//        setId("");
-//        setPassword("");
         console.error('로그인 요청 실패:', error);
+        Alert.alert("로그인 요청 실패", "서버와의 연결이 실패했습니다.");
       }
     }
   };
@@ -126,16 +115,11 @@ NaverLogin.initialize({
   return (
     <View style={styles.container}>
       <View style={styles.subcontainer}>
-        <Text
-          style={styles.title}>
-          LOGIN
-        </Text>
-        <Text
-          style={styles.text}>
-          Welcome to the MeetApp
-        </Text>
+        <Text style={styles.title}>LOGIN</Text>
+        <Text style={styles.text}>Welcome to the MeetApp</Text>
+
         <TextInput
-          ref={idInputRef} // TextInput에 ref 연결
+          ref={idInputRef}
           style={styles.input}
           placeholder="아이디를 입력하세요"
           keyboardType="default"
@@ -143,15 +127,15 @@ NaverLogin.initialize({
           onChangeText={setId}
         />
         <TextInput
-          ref={pwInputRef} // TextInput에 ref 연결
+          ref={pwInputRef}
           style={styles.input}
           placeholder="비밀번호를 입력하세요"
           secureTextEntry
           value={password}
           onChangeText={setPassword}
         />
-        <View
-          style={styles.row}>
+
+        <View style={styles.row}>
           <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
             <Text style={styles.btnText}>로그인</Text>
           </TouchableOpacity>
@@ -160,30 +144,31 @@ NaverLogin.initialize({
           </TouchableOpacity>
         </View>
 
-        <SafeAreaView>
-              <Button
-                title="네이버 아이디로 로그인하기"
-                onPress={() => naverLogin(initials)}
-              />
-              {!!naverToken && <Button title="로그아웃하기" onPress={naverLogout} />}
+        <View style={{ marginVertical: 25 }}></View>
+        <View style={styles.line}></View>
 
-              {!!naverToken && (
-                <Button title="회원정보 가져오기" onPress={getUserProfile} />
-              )}
-            </SafeAreaView>
+        <SafeAreaView style={styles.row}>
+          <TouchableOpacity onPress={() => naverLogin(initials)} style={{ alignItems: 'center', marginVertical: 10 }}>
+            <Image
+              source={require('../assets/images/login_naver/btnG_아이콘원형.png')}
+              style={{ width: 40, height: 40 }}
+            />
+          </TouchableOpacity>
 
-        <View
-          style={styles.appContainer}>
-          <Text
-            style={styles.appName}>
-            MeetApp
-          </Text>
+          <TouchableOpacity onPress={deleteToken} style={{ marginTop: 20, alignItems: 'center' }}>
+            <Image
+              source={require('../assets/images/login_naver/btnG_아이콘원형.png')}
+              style={{ width: 40, height: 40 }}
+            />
+          </TouchableOpacity>
+        </SafeAreaView>
+
+        <View style={styles.appContainer}>
+          <Text style={styles.appName}>MeetApp</Text>
         </View>
       </View>
     </View>
   );
 };
-
-
 
 export default LoginScreen;

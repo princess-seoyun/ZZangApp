@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: 13,
     marginBottom: 5,
-    fontFamily : 'GmarketSansTTFMedium',
+    fontFamily : 'GmarketSansTTFLight',
   },
   row: {
     flexDirection: 'row',  // 버튼을 가로로 배치
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     textAlign : 'center',
     alignContent: 'center',
     color : 'white',
-    fontFamily : 'GmarketSansTTFBold',
+    fontFamily : 'GmarketSansTTFMedium',
     fontSize : 20
   },
   appContainer : {

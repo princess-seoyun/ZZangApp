@@ -1,8 +1,22 @@
 #import "AppDelegate.h"
+#import <NaverThirdPartyLogin/NaverThirdPartyLoginConnection.h>
+
 
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  // naver
+  if ([url.scheme isEqualToString:@"{{ SignUp }}"]) {
+    return [[NaverThirdPartyLoginConnection getSharedInstance] application:app openURL:url options:options];
+  }
+
+  // kakao
+
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

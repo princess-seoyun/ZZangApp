@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 로그 파일 저장 위치 -->
+    <property name="LOGS_PATH" value="./backend/src/main/resources/logs"/>
+
+    <!-- 콘솔에 로그 출력 (옵션) -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 날짜별 로그 파일로 저장 -->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 로그 파일 이름 패턴 (매일 새로운 로그 파일 생성) -->
+            <fileNamePattern>${LOGS_PATH}/spring_boot/%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory> <!-- 최근 7일 간의 로그 파일만 보관 -->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- INFO 이상의 레벨로만 로그를 남기도록 설정 -->
+    <logger name="com.app.backend" level="info">
+        <appender-ref ref="file"/>
+    </logger>
+
+    <!-- 콘솔에는 INFO 이상만 출력 (로그 레벨을 info로 설정) -->
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+    </root>
+
+</configuration>

@@ -37,4 +37,6 @@ target 'frontend' do
       # :ccache_enabled => true
     )
   end
+
+  pod 'naveridlogin-sdk-ios'
 end

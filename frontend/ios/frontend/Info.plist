@@ -20,24 +20,27 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>{{ SignUp }}</string>
-			</array>
-		</dict>
-	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>naversearchapp</string>
 		<string>naversearchthirdlogin</string>
+		<string>naverlogin</string>
 	</array>
+        <key>CFBundleURLTypes</key>
+            <array>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLName</key>
+                    <string>naver</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>org.reactjs.native.example.frontend</string>
+                    </array>
+                </dict>
+            </array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

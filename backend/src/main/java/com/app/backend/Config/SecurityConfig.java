@@ -26,8 +26,8 @@ public class SecurityConfig {
                 authorizeRequests
                     .requestMatchers("/h2-console/**").permitAll()  // H2 콘솔 접근 허용
                     .requestMatchers("/user/**").permitAll()  // "/user/**" 경로 허용
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("/posts/**", "/api/posts/**").hasRole("USER")  // USER 역할을 가진 사람만 접근 가능
+                    .requestMatchers("/").permitAll()
+                    .requestMatchers("/posts/**", "/api/posts/**").hasRole("USER")  // USER 역할을 가진 사람만 접근 가능
                     .requestMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")  // ADMIN 역할을 가진 사람만 접근 가능
                     .anyRequest().authenticated()  // 나머지 요청은 인증 필요
             );

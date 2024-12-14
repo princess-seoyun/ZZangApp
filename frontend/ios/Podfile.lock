@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.9.1)
   - boost (1.84.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.76.3)
@@ -7,6 +8,22 @@ PODS:
   - hermes-engine (0.76.3):
     - hermes-engine/Pre-built (= 0.76.3)
   - hermes-engine/Pre-built (0.76.3)
+  - kakao-login (5.4.1):
+    - KakaoSDKAuth (= 2.22.0)
+    - KakaoSDKCommon (= 2.22.0)
+    - KakaoSDKUser (= 2.22.0)
+    - React
+  - KakaoSDKAuth (2.22.0):
+    - KakaoSDKCommon (= 2.22.0)
+  - KakaoSDKCommon (2.22.0):
+    - KakaoSDKCommon/Common (= 2.22.0)
+    - KakaoSDKCommon/Network (= 2.22.0)
+  - KakaoSDKCommon/Common (2.22.0)
+  - KakaoSDKCommon/Network (2.22.0):
+    - Alamofire (~> 5.9.0)
+    - KakaoSDKCommon/Common (= 2.22.0)
+  - KakaoSDKUser (2.22.0):
+    - KakaoSDKAuth (= 2.22.0)
   - naveridlogin-sdk-ios (4.2.3)
   - RCT-Folly (2024.01.01.00):
     - boost
@@ -1782,6 +1799,7 @@ DEPENDENCIES:
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
+  - "kakao-login (from `../node_modules/@react-native-seoul/kakao-login`)"
   - naveridlogin-sdk-ios
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCT-Folly/Fabric (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
@@ -1851,6 +1869,10 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
+    - KakaoSDKAuth
+    - KakaoSDKCommon
+    - KakaoSDKUser
     - naveridlogin-sdk-ios
     - SocketRocket
 
@@ -1868,6 +1890,8 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-2024-11-12-RNv0.76.2-5b4aa20c719830dcf5684832b89a6edb95ac3d64
+  kakao-login:
+    :path: "../node_modules/@react-native-seoul/kakao-login"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTDeprecation:
@@ -1996,12 +2020,17 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   boost: 1dca942403ed9342f98334bf4c3621f011aa7946
   DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
   FBLazyVector: be7314029d6ec6b90f0f75ce1195b8130ed9ac4f
   fmt: 10c6e61f4be25dc963c36bd73fc7b1705fe975be
   glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
   hermes-engine: 0555a84ea495e8e3b4bde71b597cd87fbb382888
+  kakao-login: 6f7a39583ae9e1a4e76240e66ae3ec575d461d1e
+  KakaoSDKAuth: 569b377eda622d93d4575240b8031cd658163eef
+  KakaoSDKCommon: d57127c339fc79e73aa8b236a4c77211c29924f1
+  KakaoSDKUser: 043bcd7e91454ebf3bf64f150c430e6f65f0a08d
   naveridlogin-sdk-ios: d9d46d02119d303023d7000cd5963864d5bb89e5
   RCT-Folly: bf5c0376ffe4dd2cf438dcf86db385df9fdce648
   RCTDeprecation: 2c5e1000b04ab70b53956aa498bf7442c3c6e497

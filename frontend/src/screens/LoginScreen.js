@@ -4,83 +4,12 @@ import axios from 'axios';
 import styles from '../styles/loginStyle';
 import NaverLogin from '@react-native-seoul/naver-login';
 
-const iosKeys = {
-  kConsumerKey: "Xyho5Y98bYLW2GizVv49",
-  kConsumerSecret: "A7koS2rbb4",
-  kServiceAppName: "frontend",
-  kServiceAppUrlScheme: "org.reactjs.native.example.frontend.Login", // only for iOS
-};
-
-const androidKeys = {
-  // Add your Android keys here if necessary
-};
-
-const initials = Platform.OS === "ios" ? iosKeys : androidKeys;
-
 const LoginScreen = ({ navigation }) => {
+
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const idInputRef = useRef(null);
   const pwInputRef = useRef(null);
-  const [naverToken, setNaverToken] = useState(null);
-
-  useEffect(() => {
-    try {
-      // Initialize Naver Login SDK
-      NaverLogin.initialize({
-        appName: iosKeys.kServiceAppName,
-        consumerKey: iosKeys.kConsumerKey,
-        consumerSecret: iosKeys.kConsumerSecret,
-        serviceUrlSchemeIOS: iosKeys.kServiceAppUrlScheme,
-        disableNaverAppAuthIOS: true,
-      });
-      console.log("네이버 로그인 초기화 성공");
-    } catch (error) {
-      console.error("네이버 로그인 초기화 실패 :", error);
-    }
-  }, []);
-
-  const naverLogin = async (props) => {
-    try {
-      const token = await new Promise((resolve, reject) => {
-        NaverLogin.login(props, (err, token) => {
-          if (err) {
-            console.error("Naver login 에러: ", err);
-            reject(err);
-            return;
-          }
-          resolve(token);
-        });
-      });
-
-      if (token && token.access_token) {
-        console.log("Naver login 성공, token: ", token);
-        setNaverToken(token.access_token);
-        navigation.navigate('Main');
-      }
-    } catch (error) {
-      console.error("Error during Naver login:", error);
-      Alert.alert("Login failed", "An error occurred during the login process.");
-    }
-  };
-
-  const naverLogout = () => {
-    NaverLogin.logout();  // Naver logout
-    setNaverToken(null);   // Reset Naver token
-    Alert.alert('로그아웃', '로그아웃이 완료되었습니다.');
-    deleteToken();
-  };
-
-  const deleteToken = async () => {
-      try {
-        await NaverLogin.deleteToken();
-//        setSuccessResponse(undefined);
-//        setFailureResponse(undefined);
-//        setGetProfileRes(undefined);
-      } catch (e) {
-        console.error(e);
-      }
-    };
 
   const handleSubmit = async () => {
     if (!id) {
@@ -143,25 +72,6 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.btnText2}>회원가입</Text>
           </TouchableOpacity>
         </View>
-
-        <View style={{ marginVertical: 25 }}></View>
-        <View style={styles.line}></View>
-
-        <SafeAreaView style={styles.row}>
-          <TouchableOpacity onPress={() => naverLogin(initials)} style={{ alignItems: 'center', marginVertical: 10 }}>
-            <Image
-              source={require('../assets/images/login_naver/btnG_아이콘원형.png')}
-              style={{ width: 40, height: 40 }}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={deleteToken} style={{ marginTop: 20, alignItems: 'center' }}>
-            <Image
-              source={require('../assets/images/login_naver/btnG_아이콘원형.png')}
-              style={{ width: 40, height: 40 }}
-            />
-          </TouchableOpacity>
-        </SafeAreaView>
 
         <View style={styles.appContainer}>
           <Text style={styles.appName}>MeetApp</Text>

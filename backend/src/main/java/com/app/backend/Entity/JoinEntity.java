@@ -14,9 +14,18 @@ public class JoinEntity {
     private String uuid;
     @Column(unique = true)
     private String id;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
+    private String gender;
+    @Column(nullable = false)
+    private int age;
+    @Column(nullable = false)
+    private String auth_path;
 
     @Enumerated(EnumType.STRING) // Role enum을 DB에 문자열로 저장
     private Role role;

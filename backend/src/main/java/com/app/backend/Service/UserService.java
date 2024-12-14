@@ -70,8 +70,19 @@ public class UserService {
 
         // 사용자가 입력한 비밀번호와 DB에 저장된 암호화된 비밀번호 비교
         String pw = loginDto.getPassword();
-        loginDto.setPassword(userMapper.login(encryptId));  // 사용자가 입력한 ID로 DB에서 사용자 정보 조회
+        loginDto.setPassword(userMapper.getId(encryptId));  // 사용자가 입력한 ID로 DB에서 사용자 정보 조회
         if (pw != null && encryptionService.passwordMatches(pw, loginDto.getPassword())) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public int checkId(LoginDto loginDto) throws Exception {
+        String encryptId = aesService.encrypt(loginDto.getId());
+        String alreadyId = userMapper.getId(encryptId);
+
+        if(alreadyId == null) {
             return 1;
         } else {
             return 0;

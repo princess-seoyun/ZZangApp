@@ -78,4 +78,17 @@ public class UserController {
         }
     }
 
+    // 회원가입
+    @PostMapping("/checkId")
+    public String checkId(@RequestBody LoginDto loginDto) throws Exception {
+        int save = userService.checkId(loginDto);
+
+        if(save == 1) {
+            logger.info("아이디 중복 없음");
+            return "success";
+        }
+
+        return "fail";
+    }
+
 }

@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',  // 버튼 간의 간격을 균등하게 분배
     width: '90%',
     marginTop: '10%',
+    alignItems: 'center',
   },
   iconrow: {
       flexDirection: 'row',  // 버튼을 가로로 배치

@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
   subcontainer: {
     width : '70%',
-    height : '50%'
+    height : '40%'
   },
   input: { 
     height: 50, 
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   btn: {
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
     width: '49%', 
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     color : 'white'
   },
   appContainer : {
-    height : '35%',
+    height : '75%',
     justifyContent: 'flex-end', 
     alignItems: 'center',
   },
@@ -78,15 +78,8 @@ const styles = StyleSheet.create({
     color : 'gray',
     fontFamily : 'GmarketSansTTFMedium',
   },
-  line : {
-    flex : 1,
-    borderWidth : 0.5,
-    width : "100%",
-    borderBottomColor: '#EAEAEA',
-    justifyContent: 'center',
-    alignItems: 'center',
 
-  }
+
 });
 
 export default styles;

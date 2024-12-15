@@ -36,12 +36,12 @@ public class UserService {
  
         // 아이디, 이름 암호화
         try {
-            String encryptName = aesService.encrypt(userEntity.getName());
+            String encryptName = aesService.encrypt(userEntity.getNickname());
             String encryptId = aesService.encrypt(userEntity.getId());
             if(encryptName == null) {
                 return 0;
             }
-            userEntity.setName(encryptName);
+            userEntity.setNickname(encryptName);
             userEntity.setId(encryptId);
         } catch (Exception e) {
             e.printStackTrace();

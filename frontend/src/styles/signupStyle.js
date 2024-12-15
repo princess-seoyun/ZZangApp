@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
   },
+
   icon : {
     marginTop: 20,
     alignItems: 'center'

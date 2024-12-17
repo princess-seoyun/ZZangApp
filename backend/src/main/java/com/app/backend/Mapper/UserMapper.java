@@ -8,7 +8,7 @@ import com.app.backend.Entity.JoinEntity;
 @Mapper
 public interface UserMapper {
 
-    @Insert("insert into cust_info (id, password, nickname, email, role, gender, age , auth_path) values (#{id}, #{password}, #{nickname}, #{email} , #{role}, #{gender} , #{age}, #{auth_path})")
+    @Insert("insert into cust_info (id, password, nickname, email, role, gender, age , auth_path, save_status) values (#{id}, #{password}, #{nickname}, #{email} , #{role}, #{gender} , #{age}, #{auth_path}, #{save_status})")
     int insert(JoinEntity userEntity);
 
 //  id 로 pw 가져오기

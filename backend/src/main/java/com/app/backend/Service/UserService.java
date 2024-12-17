@@ -47,12 +47,15 @@ public class UserService {
             e.printStackTrace();
         }
 
-        
         if(userEntity.getId().equals("admin")) {
             userEntity.setRole(Role.ADMIN);
         } else { // 기본 역할은 USER 로 설정
             userEntity.setRole(Role.USER);
         }
+
+        // 저장상태값 = "Y"
+        userEntity.setSave_status("Y");
+
         return userMapper.insert(userEntity);
     }
 

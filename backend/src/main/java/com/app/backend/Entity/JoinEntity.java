@@ -26,6 +26,8 @@ public class JoinEntity {
     private int age;
     @Column(nullable = false)
     private String auth_path;
+    @Column(nullable = false)
+    private String save_status;
 
     @Enumerated(EnumType.STRING) // Role enum을 DB에 문자열로 저장
     private Role role;
